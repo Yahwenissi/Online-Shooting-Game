@@ -1,0 +1,16 @@
+{
+  "name": "online-shooting-game",
+  "version": "1.0.0",
+  "description": "Made using HTML, CSS and Javascript(using frameworks such as Bootstrap and JQuery)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.0",
+    "socket.io": "^4.8.0"
+  }
+}
