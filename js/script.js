@@ -1,33 +1,7 @@
 // Client-side JS
 
-const socket = io('http://localhost:3000');
-
-socket.on('connect', () => {
-    console.log('Connected to server:', socket.id);
-});
-
-socket.on('newBalloon', (balloon) => {
-    $("#canvas").append(
-        `<div id='${balloon.id}' class='ballon ${balloon.color}' style='left:${balloon.position.left}px; bottom:0px'></div>`
-    );
-    $(`#${balloon.id}`).bind('click', { id: balloon.id }, destroy);
-});
-
-socket.on('updatePlayers', (players) => {
-    let playerListHtml = '';
-    Object.values(players).forEach(player => {
-        playerListHtml += `<li>${player.id}: <span>${player.score}</span></li>`;
-    });
-    $("#players-list").html(playerListHtml);
-});
-
-socket.on('balloonDestroyed', (data) => {
-    console.log(`Balloon ${data.balloonId} destroyed by player ${data.playerId}`);
-    $(`#${data.balloonId}`).remove();
-});
-
-$(document).ready(() => {
-    $("#canvas").append("<h2 class='text-center' style='margin: 200px'>Click to Start Game</h2>");
+$(document).ready(()=>{
+    $("#canvas").append("<h2 class='text-center' style='margin: 200px'>Click for Start Game</h2>");
     $("#canvas").click(startGame);
 });
 
@@ -123,3 +97,29 @@ const destroy = (event) => {
     const balloonId = event.data.id;
     socket.emit('shootBalloon', balloonId); // Notify server
 };
+
+const socket = io('http://localhost:3000');
+
+socket.on('connect', () => {
+    console.log('Connected to server:', socket.id);
+});
+
+socket.on('newBalloon', (balloon) => {
+    $("#canvas").append(
+        `<div id='${balloon.id}' class='ballon ${balloon.color}' style='left:${balloon.position.left}px; bottom:0px'></div>`
+    );
+    $(`#${balloon.id}`).bind('click', { id: balloon.id }, destroy);
+});
+
+socket.on('updatePlayers', (players) => {
+    let playerListHtml = '';
+    Object.values(players).forEach(player => {
+        playerListHtml += `<li>${player.id}: <span>${player.score}</span></li>`;
+    });
+    $("#players-list").html(playerListHtml);
+});
+
+socket.on('balloonDestroyed', (data) => {
+    console.log(`Balloon ${data.balloonId} destroyed by player ${data.playerId}`);
+    $(`#${data.balloonId}`).remove();
+});
